@@ -56,7 +56,7 @@ English：[`README_EN.md`](./README_EN.md)
 
 **部署步骤：**
 
-1. 首先Fork本仓库，命名为**NodeWarden**
+1. 首先Fork本仓库，命名为**NodeWarden**，取消选择 Copy the main branch only
 2. 根据对储存库的需求，**二选一**点击下面的按钮，修改项目名称为**NodeWarden2**，修改**JWT_SECRET**成32为随机字符串；
   - **R2**：需绑定银行卡；**单个附件/Send上限 100MB**（代码限制，可自行修改）；**总量 10GB 免费**
   

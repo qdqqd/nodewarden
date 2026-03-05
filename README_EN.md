@@ -8,8 +8,6 @@
 
 [![Powered by Cloudflare](https://img.shields.io/badge/Powered%20by-Cloudflare-F38020?logo=cloudflare&logoColor=white)](https://workers.cloudflare.com/)
 [![License: LGPL-3.0](https://img.shields.io/badge/License-LGPL--3.0-2ea44f)](./LICENSE)
-[![Deploy (R2)](https://img.shields.io/badge/Deploy%20(R2)-Cloudflare%20Workers-F38020?logo=cloudflare&logoColor=white)](https://deploy.workers.cloudflare.com/?url=https://github.com/shuaiplus/NodeWarden)
-[![Deploy (KV)](https://img.shields.io/badge/Deploy%20(KV)-Cloudflare%20Workers-2ea44f?logo=cloudflare&logoColor=white)](#kv-mode-no-credit-card)
 [![Latest Release](https://img.shields.io/github/v/release/shuaiplus/NodeWarden?display_name=tag)](https://github.com/shuaiplus/NodeWarden/releases/latest)
 [![Sync Upstream](https://github.com/shuaiplus/NodeWarden/actions/workflows/sync-upstream.yml/badge.svg)](https://github.com/shuaiplus/NodeWarden/actions/workflows/sync-upstream.yml)
 
@@ -30,12 +28,12 @@
 | Web Vault (logins/notes/cards/identities) | ✅ | ✅ | Web-based vault management UI |
 | Folders / Favorites | ✅ | ✅ | Common vault organization supported |
 | Full sync `/api/sync` | ✅ | ✅ | Compatibility and performance optimized |
-| Attachment upload/download | ✅ | ✅ | Backed by Cloudflare R2 (or optional KV mode) |
-| mport / export | ✅ | ✅ | Fully implemented, including Bitwarden vault + attachments ZIP import. |
+| Attachment upload/download | ✅ | ✅ | Choose either Cloudflare R2 or KV |
+| Import / export | ✅ | ✅ | Fully implemented, including Bitwarden vault + attachments ZIP import |
 | Website icon proxy | ✅ | ✅ | Via `/icons/{hostname}/icon.png` |
-| passkey、TOTP fields | ❌ | ✅ | Official service requires premium; NodeWarden does not |
+| passkey / TOTP fields | ✅ | ✅ | Fully supported, no premium required |
+| Send | ✅ | ✅ | Choose either Cloudflare R2 or KV |
 | Multi-user | ✅ | ✅ | Full user management with invitation mechanism |
-| Send | ✅ | ✅ | Text Send and File Send are supported |
 | Organizations / Collections / Member roles | ✅ | ❌ | Not necessary to implement |
 | Login 2FA (TOTP/WebAuthn/Duo/Email) | ✅ | ⚠️ Partial | User-level TOTP only |
 | SSO / SCIM / Enterprise directory | ✅ | ❌ | Not necessary to implement |
@@ -59,23 +57,23 @@
 
 **Deploy steps:**
 
-1. Fork this repository and name it **NodeWarden**.
-2. Click the one-click deploy button below, rename the project to **NodeWarden2**, set **JWT_SECRET** to a 32-character random string; if you **do not have a credit card**, **use KV mode** and change the deploy command to `npm run deploy:kv`.
+1. Fork this repository, name it **NodeWarden**, and make sure **Copy the main branch only** is **unchecked**.
+2. Choose one deployment mode below, rename the project to **NodeWarden2**, and set **JWT_SECRET** to a random 32-character string.
+   - **R2**: requires a payment method; **single attachment/Send file limit is 100 MB** (project-level limit, editable in code); **10 GB free storage**.
 
-    [![Deploy to Cloudflare Workers (R2)](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/shuaiplus/nodewarden)
+     [![Deploy (R2)](https://img.shields.io/badge/Deploy%20(R2)-Cloudflare%20Workers-F38020?logo=cloudflare&logoColor=white)](https://deploy.workers.cloudflare.com/?url=https://github.com/shuaiplus/NodeWarden)
 
-3. After deployment, open the Workers settings on the same page and disconnect the **Git repository**.
-4. From the same location, reconnect the **Git repository** to the fork you created in step 1.
+   - **KV**: no card required; **single attachment/Send file limit is 25 MiB** (Cloudflare platform limit, not editable); **1 GB free storage**.
 
-> [!NOTE] 
-> R2 vs KV
->- R2: typically requires a payment method; **single attachment/Send file limit is 100 MB** (**project-level limit, editable in code**); **10 GB free storage included**.
->- KV: no card required; **single attachment/Send file limit is 25 MiB** (**Cloudflare platform limit, not editable**); **1 GB free storage included**.
+     [![Deploy (KV)](https://img.shields.io/badge/Deploy%20(KV)-Cloudflare%20Workers-2ea44f?logo=cloudflare&logoColor=white)](https://deploy.workers.cloudflare.com/?url=https://github.com/shuaiplus/NodeWarden/tree/kv)
+3. After deployment, open the Worker settings on the same page and disconnect the **Git repository**.
+4. Reconnect the **Git repository** to the fork from step 1. This branch selection must match the button you used: **R2 uses `main`, KV uses `kv`**.
+5. The temporary **NodeWarden2** repository can be deleted.
 
 > [!TIP] 
 > Sync upstream (keep your fork updated):
 >- Manual: open your fork on GitHub and click **Sync fork** when prompted.
->- Automatic: in your fork, go to **Actions**, click "I understand my workflows, go ahead and enable them". It will auto-sync from upstream daily at 3 AM.
+>- Automatic: in your fork, go to **Actions**, click **I understand my workflows, go ahead and enable them**. It will sync `main` from upstream, rebuild `kv` from `main`, and apply the KV `wrangler.toml` changes automatically every day at 3 AM.
 
 ### CLI deploy 
 
